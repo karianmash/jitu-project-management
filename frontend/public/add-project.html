@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mash | Manage Your Teams Project From Anywhere</title>
+    <link rel="icon" type="image/png" href="./images/logo1.png" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <!-- Navbar -->
+      <nav>
+        <!-- Logo -->
+        <a href="index.html">
+          <div class="logo">
+            <img src="images/logo1.png" alt="" />
+            <h3>Mash Software</h3>
+          </div>
+        </a>
+        <!-- Login/Sign up -->
+        <div class="profile">
+          <a href="#">Logout</a>
+
+          <a href="#">
+            Macharia
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="sidebar">
+        <a href="admin-dashboard.html"><div class="item">Dashboard</div></a>
+        <a href="#"><div class="item">Add Project</div></a>
+      </div>
+
+      <!-- Main area -->
+      <div class="main-area">
+        <!-- Add project -->
+        <div class="add-project">
+          <h3>Project details</h3>
+          <hr />
+          <form action="#">
+            <!-- Project title -->
+            <div>
+              <label for="">Title</label>
+              <input type="text" placeholder="eg. Chama kikundi" />
+            </div>
+            <!-- Select student -->
+            <div>
+              <label for="">User</label>
+              <select name="" id="cars">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+              </select>
+            </div>
+            <!-- End date -->
+            <div>
+              <label for="">End date</label>
+              <input type="date" />
+            </div>
+            <!-- Description -->
+            <div>
+              <label for="">End date</label>
+              <textarea
+                name=""
+                id=""
+                rows="9"
+                placeholder="Project description"
+              ></textarea>
+            </div>
+            <!-- Description -->
+            <div class="submit">
+              <input type="submit" value=" Add Project" />
+            </div>
+          </form>
+        </div>
+
+        <!-- Fallback -->
+        <div class="fallback">
+          <img src="images/no-content.png" alt="" />
+          <h3>Nothing Here</h3>
+        </div>
+      </div>
+    </main>
+
+    <!-- Scripts -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

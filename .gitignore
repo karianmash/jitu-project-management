@@ -1,0 +1,11 @@
+# Don't push .env file
+/background-services/.env
+
+# Don't push node packages
+/background-services/node_modules
+
+# Don't push dist folder
+/background-services/dist
+
+# Don't push dist folder
+/frontend/dist
