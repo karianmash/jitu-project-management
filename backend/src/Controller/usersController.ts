@@ -79,7 +79,7 @@ export async function loginUser(req: UserLoginRequest, res: Response) {
 
       if (result) {
         const payload = user.map((item) => {
-          const { user_password, user_last_name, ...rest } = item;
+          const { user_password, ...rest } = item;
           return rest;
         });
         const token = jwt.sign(payload[0], process.env.JWT_KEY as string, {

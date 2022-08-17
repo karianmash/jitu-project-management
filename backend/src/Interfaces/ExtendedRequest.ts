@@ -19,7 +19,7 @@ export interface UserLoginRequest extends Request {
 export interface ProjectRequest extends Request {
   body: {
     user_id: string;
-    user_name: string;
+    project_id: string;
     title: string;
     date: string;
     description: string;

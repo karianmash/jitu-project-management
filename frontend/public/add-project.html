@@ -22,10 +22,10 @@
         </a>
         <!-- Login/Sign up -->
         <div class="profile">
-          <a href="#">Logout</a>
+          <a href="#" id="logout">Logout</a>
 
           <a href="#">
-            Macharia
+            <span id="user-name"></span>
             <ion-icon name="person-circle-outline"></ion-icon>
           </a>
         </div>
@@ -49,31 +49,36 @@
             <!-- Project title -->
             <div>
               <label for="">Title</label>
-              <input id="title" type="text" placeholder="eg. Chama kikundi" />
+              <input
+                id="title"
+                required
+                type="text"
+                placeholder="eg. Chama kikundi"
+              />
             </div>
             <!-- Select student -->
             <div>
               <label for="">User</label>
-              <select id="users"></select>
+              <select id="users" required></select>
             </div>
             <!-- End date -->
             <div>
               <label for="">End date</label>
-              <input type="date" />
+              <input type="date" id="date" />
             </div>
             <!-- Description -->
             <div>
               <label for="">Description</label>
               <textarea
-                name=""
-                id=""
+                required
+                id="description"
                 rows="9"
                 placeholder="Project description"
               ></textarea>
             </div>
             <!-- Description -->
             <div class="submit">
-              <input type="submit" value=" Add Project" />
+              <input type="submit" value=" Add Project" id="submit-project" />
             </div>
           </form>
         </div>
@@ -100,10 +105,10 @@
       // window.onload = alert("Hi")
 
       // Fetch user
-      fetch("http://localhost:8000/users/getUsers")
+      window.onload = fetch("http://localhost:8000/users/getUsers")
         .then((response) => response.json())
         .then((data) => {
-          // console.log("Success:", data);
+          console.log("Success:", data);
 
           let usersContainer = document.getElementById("users");
 
@@ -116,11 +121,83 @@
             usersContainer.appendChild(option);
           });
 
-          console.log("Success:", data);
+          // console.log("Success:", data);
         })
         .catch((error) => {
           console.error("Error:", error);
         });
+
+      // Handle logout and username
+      let logout = document.getElementById("logout");
+      let name = document.getElementById("user-name");
+
+      let user_payload = JSON.parse(localStorage.getItem("user_payload"));
+
+      window.onload = () => {
+        name.innerHTML = user_payload.user.user_first_name;
+      };
+
+      logout.addEventListener("click", () => {
+        if (user_payload) {
+          localStorage.removeItem("user_payload");
+        }
+
+        location.replace("http://127.0.0.1:5500/frontend/public/index.html");
+      });
+
+      // Handle form submission
+      let title = document.getElementById("title");
+      let users = document.getElementById("users");
+      let date = document.getElementById("date");
+      let description = document.getElementById("description");
+      let submit = document.getElementById("submit-project");
+
+      submit.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        let project = {
+          title: title.value,
+          user_id: users.options[users.selectedIndex].id,
+          date: date.value,
+          description: description.value,
+        };
+
+        // alert(project.user)
+        // Validate inputs
+        if (
+          !project.title ||
+          !project.user_id ||
+          !project.date ||
+          !project.description
+        ) {
+          return alert("Please add all field...");
+        }
+
+        // Post project
+        fetch("http://localhost:8000/projects/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "token": user_payload.token
+          },
+          body: JSON.stringify(project),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+
+            if (data.message === 'Project added and assigned successful!') {
+              location.replace(
+              "http://127.0.0.1:5500/frontend/public/admin-dashboard.html"
+            );
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        // console.log(project);
+      });
     </script>
   </body>
 </html>

@@ -8,7 +8,7 @@ dotenv.config();
 //   info?: Data;
 // }
 // export const VerifyToken = (
-//   req: Extended,
+//   req: Request,
 //   res: Response,
 //   next: NextFunction
 // ) => {

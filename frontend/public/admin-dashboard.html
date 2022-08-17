@@ -22,10 +22,10 @@
         </a>
         <!-- Login/Sign up -->
         <div class="profile">
-          <a href="#">Logout</a>
+          <a href="#" id="logout">Logout</a>
 
           <a href="#">
-            Macharia
+            <span id="user-name"></span>
             <ion-icon name="person-circle-outline"></ion-icon>
           </a>
         </div>
@@ -57,11 +57,12 @@
           <!-- Users table -->
           <table>
             <colgroup>
-              <col span="1" style="width: auto" />
-              <col span="1" style="width: auto" />
-              <col span="1" style="width: 35%" />
-              <col span="1" style="width: auto" />
-              <col span="1" style="width: auto" />
+              <col span="1" style="width: 10%" />
+              <col span="1" style="width: 20%" />
+              <col span="1" style="width: 33%" />
+              <col span="1" style="width: 12%" />
+              <col span="1" style="width: 15%" />
+              <col span="1" style="width: 10%" />
             </colgroup>
 
             <thead>
@@ -75,9 +76,9 @@
               </tr>
             </thead>
             <!-- Table body -->
-            <tbody>
+            <tbody id="table-data">
               <!-- First row -->
-              <tr>
+              <!-- <tr>
                 <td>1</td>
                 <td>Chama Kikundi</td>
                 <td>
@@ -91,7 +92,7 @@
                 <td class="delete-btn">
                   <div><ion-icon name="trash-outline"></ion-icon></div>
                 </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
           <!-- End table creation here -->
@@ -117,5 +118,96 @@
 
     <!-- Script -->
     <script src="../dist/index.js" type="module"></script>
+    <script>
+      let logout = document.getElementById("logout");
+      let name = document.getElementById("user-name");
+
+      let user_payload = JSON.parse(localStorage.getItem("user_payload"));
+
+      window.onload = () => {
+        name.innerHTML = `${user_payload.user.user_first_name} ${user_payload.user.user_last_name}`;
+      };
+
+      logout.addEventListener("click", () => {
+        if (user_payload) {
+          localStorage.removeItem("user_payload");
+        }
+
+        location.replace("http://127.0.0.1:5500/frontend/public/index.html");
+      });
+
+      // Fetch projects
+      window.onload = fetch("http://localhost:8000/projects/getProjects", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          token: user_payload.token,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+
+          let tableData = document.getElementById("table-data");
+          let number = 1;
+
+          data.forEach((tableRow) => {
+            let tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${number}</td>
+                <td>${tableRow.project_name}</td>
+                <td>
+                  ${tableRow.project_description}
+                </td>
+                <td>${tableRow.user_first_name} ${tableRow.user_last_name}</td>
+                <td class="project-status"><div>${tableRow.project_status}</div></td>
+                <td class="delete-btn">
+                  <div id="${tableRow.project_id}"><ion-icon name="trash-outline"></ion-icon></div>
+                </td>
+            `;
+
+            number++;
+
+            tableData.appendChild(tr);
+
+            let delBtn = document.getElementById(`${tableRow.project_id}`);
+
+            delBtn.addEventListener("click", deleteProject);
+          });
+
+          // document.querySelector(".dashboard-home").style.display = "none";
+          // document.querySelector(".fallback").style.display = "flex";
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      // Delete project
+      async function deleteProject(e) {
+        let project = {
+          project_id: e.target.parentElement.id,
+        };
+
+        // alert(e.target.parentElement.id);
+
+        fetch("http://localhost:8000/projects/deleteProject", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            token: user_payload.token,
+          },
+          body: JSON.stringify(project),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            location.reload();
+            // console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
   </body>
 </html>
