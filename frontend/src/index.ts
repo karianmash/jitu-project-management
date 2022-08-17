@@ -9,3 +9,5 @@ signUpBtn.addEventListener("click", render.showRegisterForm);
 loginBtn.addEventListener("click", render.showLoginForm);
 
 window.onclick = event.closeModal;
+
+// window.onload = alert("hi");

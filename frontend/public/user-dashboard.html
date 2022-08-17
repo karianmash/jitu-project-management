@@ -55,12 +55,22 @@
           </div>
           <!-- Users table -->
           <table>
+            <colgroup>
+              <col span="1" style="width: auto" />
+              <col span="1" style="width: auto" />
+              <col span="1" style="width: 35%" />
+              <col span="1" style="width: auto" />
+              <col span="1" style="width: auto" />
+            </colgroup>
+
             <thead>
               <tr>
                 <th>#Pid</th>
                 <th>Title</th>
+                <th>Description</th>
                 <th>Name</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <!-- Table body -->
@@ -69,8 +79,17 @@
               <tr>
                 <td>1</td>
                 <td>Chama Kikundi</td>
+                <td>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Aliquam adipisci corporis molestias quod? Sunt animi dolorum
+                  nam quis in vitae quod consectetur. Iure autem nesciunt
+                  dolores perferendis amet optio in?
+                </td>
                 <td>Ian Macharia</td>
                 <td class="project-status"><div>Complete</div></td>
+                <td class="delete-btn">
+                  <div><ion-icon name="trash-outline"></ion-icon></div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -94,5 +113,30 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+
+    <!-- Script -->
+    <!-- <script src="../dist/index.js" type="module"></script> -->
+
+    <script>
+      fetch("http://localhost:8000/users/getUsers")
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log("Success:", data);
+
+          let usersContainer = document.getElementById("users");
+
+          data.forEach((user) => {
+            let option = document.createElement("option");
+
+            option.innerHTML = `${user.user_first_name} ${user.user_last_name}`;
+            option.setAttribute("id", user.user_id);
+
+            usersContainer.appendChild(option);
+          });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    </script>
   </body>
 </html>

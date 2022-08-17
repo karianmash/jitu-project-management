@@ -3,16 +3,17 @@ import {
   modal,
   registerContainer,
 } from "../Constants/htmlElements.js";
+import { Events } from "./eventHandler.js";
+
+let event = new Events();
 
 export class renderToDom {
   constructor() {}
 
   // Display register form
   public showRegisterForm(): void {
-    console.log("124");
-
     let form: string = `
-        <form action="/">
+        <form action="">
             <h3>Let's go!</h3>
             <!-- First Name -->
             <div class="first-name">
@@ -25,6 +26,7 @@ export class renderToDom {
                 required
               />
             </div>
+
             <!-- Last Name -->
             <div class="last-name">
               <label for="">Last Name</label>
@@ -36,6 +38,7 @@ export class renderToDom {
                 required
               />
             </div>
+
             <!--  Email -->
             <div class="email">
               <label for="">Email</label>
@@ -47,6 +50,7 @@ export class renderToDom {
                 required
               />
             </div>
+
             <!--  Password -->
             <div class="password">
               <label for="">Password</label>
@@ -58,6 +62,7 @@ export class renderToDom {
                 required
               />
             </div>
+
             <!--  Submit -->
             <div class="submit">
               <input
@@ -75,12 +80,14 @@ export class renderToDom {
     registerContainer.style.display = "block";
 
     modal.style.display = "flex";
+
+    let registerBtn = document.querySelector("#submit");
+
+    registerBtn?.addEventListener("click", event.registerUser);
   }
 
   // Display login form
   public showLoginForm(): void {
-    console.log("125");
-
     let form = `
           <form action="/">
             <h3>Welcome back!</h3>
@@ -106,6 +113,7 @@ export class renderToDom {
                 required
               />
             </div>
+
             <!--  Submit -->
             <div class="submit">
               <input type="submit" id="submit" name="submit" value="Log In" />
@@ -119,5 +127,10 @@ export class renderToDom {
     loginContainer.style.display = "block";
 
     modal.style.display = "flex";
+
+    let loginBtn = document.querySelector("#submit");
+
+    loginBtn?.addEventListener("click", event.loginUser);
   }
+
 }

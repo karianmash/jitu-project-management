@@ -9,3 +9,7 @@
 
 # Don't push dist folder
 /frontend/dist
+
+/backend/dist
+/backend/node_modules
+/backend/src/request.txt

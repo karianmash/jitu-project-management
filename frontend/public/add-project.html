@@ -49,17 +49,12 @@
             <!-- Project title -->
             <div>
               <label for="">Title</label>
-              <input type="text" placeholder="eg. Chama kikundi" />
+              <input id="title" type="text" placeholder="eg. Chama kikundi" />
             </div>
             <!-- Select student -->
             <div>
               <label for="">User</label>
-              <select name="" id="cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-              </select>
+              <select id="users"></select>
             </div>
             <!-- End date -->
             <div>
@@ -68,7 +63,7 @@
             </div>
             <!-- Description -->
             <div>
-              <label for="">End date</label>
+              <label for="">Description</label>
               <textarea
                 name=""
                 id=""
@@ -100,5 +95,32 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+
+    <script>
+      // window.onload = alert("Hi")
+
+      // Fetch user
+      fetch("http://localhost:8000/users/getUsers")
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log("Success:", data);
+
+          let usersContainer = document.getElementById("users");
+
+          data.forEach((user) => {
+            let option = document.createElement("option");
+
+            option.innerHTML = `${user.user_first_name} ${user.user_last_name}`;
+            option.setAttribute("id", user.user_id);
+
+            usersContainer.appendChild(option);
+          });
+
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    </script>
   </body>
 </html>
