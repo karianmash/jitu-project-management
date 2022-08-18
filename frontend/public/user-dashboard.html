@@ -167,9 +167,16 @@
           let projectName = document.getElementById("project-name");
           let dueDate = document.getElementById("due-date");
 
-          data.forEach((tableRow) => {
+          for (let tableRow of data) {
             if (tableRow.user_id === user_payload.user.user_id) {
-              alert("Hi");
+              let bgColor;
+
+              if (tableRow.project_status === "Completed") {
+                bgColor = "red";
+              } else {
+                bgColor = "#094b42";
+              }
+
               let tr = document.createElement("tr");
 
               tr.innerHTML = `
@@ -178,7 +185,7 @@
                   ${tableRow.project_description}
                 </td>
                 <td>${tableRow.user_first_name} ${tableRow.user_last_name}</td>
-                <td class="project-status"><div>${tableRow.project_status}</div></td>
+                <td class="project-status"><div style="background-color: ${bgColor};">${tableRow.project_status}</div></td>
             `;
 
               projectName.innerHTML = tableRow.project_name;
@@ -189,14 +196,18 @@
               let updateBtn = document.querySelector(".project-status");
 
               updateBtn.addEventListener("click", updateProject);
+
+              document.querySelector(".dashboard-home").style.display = "block";
+              document.querySelector(".fallback").style.display = "none";
+
+              break;
+            } else {
+              document.querySelector(".dashboard-home").style.display = "none";
+              document.querySelector(".fallback").style.display = "flex";
             }
+          }
 
-            // console.log(data);
-          });
-          // alert("Noo")
-
-          // document.querySelector(".dashboard-home").style.display = "none";
-          // document.querySelector(".fallback").style.display = "flex";
+          // console.log(data);
         })
         .catch((error) => {
           console.error("Error:", error);

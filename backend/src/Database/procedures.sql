@@ -5,6 +5,17 @@
 --     DELETE FROM projects WHERE project_id = @project_id;
 -- END
 
+-- Procedure to update project
+-- CREATE PROCEDURE updateProjectStatus(
+--     @project_id VARCHAR(200)
+--     )
+-- AS
+-- BEGIN
+--     UPDATE projects
+--     SET project_status = 'Completed'
+--     WHERE project_id = @project_id;
+-- END
+
 -- Procedure to assign user project
 -- CREATE PROCEDURE assignUserProject( 
 --     @user_id VARCHAR(80),

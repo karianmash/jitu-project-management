@@ -175,7 +175,7 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto;
-            background-color: #ec4a61;
+            background-color: red;
             color: #fff;
             padding: 0.7rem 0.2rem;
             border-radius: 3px;
@@ -283,7 +283,7 @@
 
     // Fallback
     .fallback {
-      display: none; //flex
+      display: flex; //flex
       flex-direction: column;
       align-items: center;
       justify-content: center;

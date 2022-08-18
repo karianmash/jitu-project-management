@@ -51,7 +51,7 @@
             </div>
             <div class="card" id="projects">
               <h3>Projects</h3>
-              <p>10</p>
+              <p id="num-projects"></p>
             </div>
           </div>
           <!-- Users table -->
@@ -151,8 +151,16 @@
           let tableData = document.getElementById("table-data");
           let number = 1;
 
-          data.forEach((tableRow) => {
+          for (tableRow of data) {
             let tr = document.createElement("tr");
+
+            let bgColor;
+
+            if (tableRow.project_status === "Completed") {
+              bgColor = "red";
+            } else {
+              bgColor = "#094b42";
+            }
 
             tr.innerHTML = `
                 <td>${number}</td>
@@ -161,7 +169,7 @@
                   ${tableRow.project_description}
                 </td>
                 <td>${tableRow.user_first_name} ${tableRow.user_last_name}</td>
-                <td class="project-status"><div>${tableRow.project_status}</div></td>
+                <td class="project-status"><div style="background-color: ${bgColor};">${tableRow.project_status}</div></td>
                 <td class="delete-btn">
                   <div id="${tableRow.project_id}"><ion-icon name="trash-outline"></ion-icon></div>
                 </td>
@@ -174,10 +182,13 @@
             let delBtn = document.getElementById(`${tableRow.project_id}`);
 
             delBtn.addEventListener("click", deleteProject);
-          });
 
-          // document.querySelector(".dashboard-home").style.display = "none";
-          // document.querySelector(".fallback").style.display = "flex";
+            document.querySelector(".dashboard-home").style.display = "block";
+            document.querySelector(".fallback").style.display = "none";
+          }
+
+          document.querySelector("#num-projects")
+
         })
         .catch((error) => {
           console.error("Error:", error);

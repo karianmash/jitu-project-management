@@ -54,37 +54,37 @@ export async function getProjects(req: ProjectRequest, res: Response) {
   }
 }
 
-// GetSingleProject
-// Get all projects
-// export async function get(req: ProjectRequest, res: Response) {
-//   try {
-//     const pool = await mssql.connect(sqlConfig);
-//     const allprojects = (await pool.request().execute("getAllProjects"))
-//       .recordset;
-
-//     // console.log(allprojects);
-//     console.log(allprojects);
-
-//     res.json(allprojects);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 
 // assign project
 export async function assignProject(req: ProjectRequest, res: Response) {
   try {
     const pool = await mssql.connect(sqlConfig);
     const allprojects = (await pool.request().execute("getAllProjects"))
-      .recordset;
+    .recordset;
     console.log(allprojects);
-
+    
     res.json(allprojects);
   } catch (error) {
     console.log(error);
   }
 }
 
+// Update project status
+export async function updateProject(req: ProjectRequest, res: Response) {
+  try {
+    const pool = await mssql.connect(sqlConfig);
+    const { project_id } = req.body;
+
+    await pool
+      .request()
+      .input("project_id", mssql.VarChar, project_id)
+      .execute("updateProjectStatus");
+
+    res.status(201).json({ message: "Updated project..." });
+  } catch (error) {
+    res.json({ error });
+  }
+}
 /*
   -----------------------------------------------------------------------------
   *Controller that hanles project assignment
